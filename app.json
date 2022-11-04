@@ -1,0 +1,66 @@
+{
+  "expo": {
+    "name": "FaceSwiper",
+    "slug": "faceswiper",
+    "version": "1.0.0",
+    "privacy": "unlisted",
+    "orientation": "portrait",
+    "description": "Generate Faces by swiping",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "developmentClient": {
+      "silentLaunch": true
+    },
+    "scheme": "faceswiper",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "packagerOpts": {
+      "assetExts": ["html", "json"],
+      "sourceExts": ["ts", "tsx", "js", "jsx"]
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "eu.deltasiege.faceswiper",
+      "userInterfaceStyle": "automatic",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": ["faceswiper", "tel"],
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "useNextNotificationsApi": true,
+      "userInterfaceStyle": "automatic",
+      "package": "eu.deltasiege.faceswiper"
+    },
+    "androidStatusBar": {
+      "translucent": true
+    },
+    "facebookAdvertiserIDCollectionEnabled": false,
+    "facebookAutoLogAppEventsEnabled": false,
+    "androidNavigationBar": {
+      "visible": "immersive",
+      "backgroundColor": "#ffffff",
+      "barStyle": "dark-content"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "./webhook.js"
+        }
+      ]
+    }
+  }
+}
