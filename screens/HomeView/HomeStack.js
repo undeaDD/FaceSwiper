@@ -1,14 +1,15 @@
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeView, { HomeViewOptions } from "./HomeView";
+import HomeImage from "./../../assets/home.png";
+import { Image } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export const HomeStackOptions = {
     headerShown: false,
-    tabBarLabel: "Home",
-    tabBarIcon: ({ color, size }) => (
-    	<MaterialCommunityIcons name="face-man" color={color} size={26} />
+    tabBarLabel: "FaceSwiper",
+    tabBarIcon: ({ color }) => (
+    	<Image source={HomeImage} style={{width: 26, height: 26, tintColor: color}} />
     ),
 }
 

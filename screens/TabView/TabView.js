@@ -6,7 +6,7 @@ const Tab = createBottomTabNavigator();
 
 export default TabView = () => {
     return (
-		<Tab.Navigator>
+		<Tab.Navigator initialRouteName='SettingsStack' >
             <Tab.Screen name="HomeStack" component={HomeStack} options={HomeStackOptions} />
             <Tab.Screen name="SettingsStack" component={SettingsStack} options={SettingsStackOptions} />
         </Tab.Navigator>

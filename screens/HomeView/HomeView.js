@@ -1,44 +1,24 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import ViewShot from "react-native-view-shot";
-import { FlatList, useWindowDimensions, Image, Button } from 'react-native';
+import { FlatList, useWindowDimensions, Image, TouchableOpacity } from 'react-native';
+import ShareScreenshotImage from "./../../assets/share.png";
+import { useTheme } from '@react-navigation/native';
+import * as Sharing from 'expo-sharing';
 
 export const HomeViewOptions = {
     title: "FaceSwiper",
 }
 
-const data = [
-    [
-        {id: "0", image: require("./../../assets/faces/11.jpg")},
-        {id: "1", image: require("./../../assets/faces/21.jpg")},
-        {id: "2", image: require("./../../assets/faces/31.jpg")},
-        {id: "3", image: require("./../../assets/faces/41.jpg")},
-        {id: "4", image: require("./../../assets/faces/51.jpg")},
-    ],
-    [
-        {id: "0", image: require("./../../assets/faces/12.jpg")},
-        {id: "1", image: require("./../../assets/faces/22.jpg")},
-        {id: "2", image: require("./../../assets/faces/32.jpg")},
-        {id: "3", image: require("./../../assets/faces/42.jpg")},
-        {id: "4", image: require("./../../assets/faces/52.jpg")},
-    ],
-    [
-        {id: "0", image: require("./../../assets/faces/13.jpg")},
-        {id: "1", image: require("./../../assets/faces/23.jpg")},
-        {id: "2", image: require("./../../assets/faces/33.jpg")},
-        {id: "3", image: require("./../../assets/faces/43.jpg")},
-        {id: "4", image: require("./../../assets/faces/53.jpg")},
-    ]
-];
-
 const Swiper = ({items, number}) => {
     const { width } = useWindowDimensions();
+
     return (
         <FlatList 
-            data={items[number]}
+            data={items}
             keyExtractor={item => item.id}
             horizontal={true}
             pagingEnabled={true}
-            renderItem={(item) => renderItem(item, width)}
+            renderItem={(item) => renderItem(item, width, number)}
             style={{flex: 1}}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
@@ -51,10 +31,13 @@ const Swiper = ({items, number}) => {
     );
 }
 
-const renderItem = ({item}, width) => {
+const renderItem = ({item}, width, number) => {
     return (
         <Image 
-            source={item.image}
+            source={{
+                uri: "https://undeadd.github.io/FaceSwiper/faces/" + item.id +  ".jpg?date=" + new Date(),
+                cache: "reload"
+            }}
             style={{
                 width: width,
                 height: "100%",
@@ -66,26 +49,63 @@ const renderItem = ({item}, width) => {
 }
 
 export default HomeView = ({ navigation }) => {
-    const ref = useRef();
+    const { colors } = useTheme();
+    const [ array, setArray ] = useState([]);
+    const viewShotRef = useRef();
 
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => (
-                <Button 
-                    title="Snap" 
-                    onPress={() => ref.current.capture().then((uri) => {
-                        console.log(uri)
-                    })}
-                />
+            headerLeft: () => (
+                <TouchableOpacity
+                    style={{height: 26, width: 26}}
+                    activeOpacity={0.5}
+                    onPress={() => {
+                        fetch("https://undeadd.github.io/FaceSwiper/count.json").then((response) => {
+                            let text = response.text();
+                            if (Number(text)) {
+                                setArray([...Array(Number(text)).keys()]);
+                            } else {
+                                console.log("error number", text);
+                            }
+                        });
+                    }}
+                >
+                    <Image
+                        source={ShareScreenshotImage}
+                        style={{height: 26, width: 26, tintColor: colors.primary}}
+                    />
+                </TouchableOpacity>
             ),
+            headerRight: () => (
+                <TouchableOpacity
+                    style={{height: 26, width: 26}}
+                    activeOpacity={0.5}
+                    onPress={() => {
+                        viewShotRef.current.capture().then((uri) => {
+                            Sharing.shareAsync("file://" + uri, {
+                                UTI: "public.jpeg",
+                                dialogTitle: "Screenshot teilen",
+                                mimeType: "image/jpeg"
+                            })
+                        });
+                    }}
+                >
+                    <Image
+                        source={ShareScreenshotImage}
+                        style={{height: 26, width: 26, tintColor: colors.primary}}
+                    />
+                </TouchableOpacity>
+            )
         });
     }, [navigation]);
 
     return (
-        <ViewShot style={{flex: 1}} ref={ref} options={{ fileName: "Face", format: "jpg", quality: 0.9 }} >
-            <Swiper items={data} number={0} />
-            <Swiper items={data} number={1} />
-            <Swiper items={data} number={2} />
+        <ViewShot style={{flex: 1}} ref={viewShotRef} options={{ fileName: "Face", format: "jpg", quality: 0.9 }} >
+            <Swiper items={array} number={0} />
+            <Swiper items={array} number={1} />
+            <Swiper items={array} number={2} />
+            <Swiper items={array} number={3} />
+            <Swiper items={array} number={4} />
         </ViewShot>
     );
 }
