@@ -71,7 +71,12 @@ export default HomeView = ({ navigation }) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Button onPress={() => ref.current.capture()} title="Snap" />
+                <Button 
+                    title="Snap" 
+                    onPress={() => ref.current.capture().then((uri) => {
+                        console.log(uri)
+                    })}
+                />
             ),
         });
     }, [navigation]);

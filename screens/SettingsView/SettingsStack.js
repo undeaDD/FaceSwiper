@@ -6,9 +6,9 @@ const Stack = createNativeStackNavigator();
 
 export const SettingsStackOptions = {
     headerShown: false,
-    tabBarLabel: "Home",
+    tabBarLabel: "Einstellungen",
     tabBarIcon: ({ color, size }) => (
-      <MaterialCommunityIcons name="cog" color={color} size={26} />
+    	<MaterialCommunityIcons name="cog" color={color} size={26} />
     ),
 }
 

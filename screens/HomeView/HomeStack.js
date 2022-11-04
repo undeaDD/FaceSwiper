@@ -8,7 +8,7 @@ export const HomeStackOptions = {
     headerShown: false,
     tabBarLabel: "Home",
     tabBarIcon: ({ color, size }) => (
-      <MaterialCommunityIcons name="face-man" color={color} size={26} />
+    	<MaterialCommunityIcons name="face-man" color={color} size={26} />
     ),
 }
 

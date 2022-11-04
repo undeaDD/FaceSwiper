@@ -8,8 +8,8 @@ export default function App() {
 
   	return (
 		<NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme} >
-        		<TabView />
-				<StatusBar style="auto" />
+        	<TabView />
+			<StatusBar />
     	</NavigationContainer>
   	);
 }

@@ -5,7 +5,6 @@ export const SettingsViewOptions = {
 }
 
 export default SettingsView = () => {
-    
     return (
         <View style={{flex: 1}}>
         </View>
