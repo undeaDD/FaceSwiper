@@ -2,7 +2,7 @@
   "expo": {
     "name": "FaceSwiper",
     "slug": "faceswiper",
-    "owner": "undeaD_D",
+    "owner": "undead_d",
     "version": "1.0.0",
     "privacy": "unlisted",
     "orientation": "portrait",
@@ -15,7 +15,10 @@
       "baseURL": "https://undeadd.github.io/FaceSwiper",
       "homepageURL": "https://www.uni-muenster.de",
       "imprintURL": "https://undeadd.github.io/FaceSwiper/imprint.html",
-      "licensesURL": "https://undeadd.github.io/FaceSwiper/licenses.html"
+      "licensesURL": "https://undeadd.github.io/FaceSwiper/licenses.html",
+      "eas": {
+        "projectId": "c9a8cf6c-a8e7-4bfa-a0ff-8097756d339b"
+      }
     },
     "developmentClient": {
       "silentLaunch": true
@@ -34,8 +37,16 @@
       "**/*"
     ],
     "packagerOpts": {
-      "assetExts": ["html", "json"],
-      "sourceExts": ["ts", "tsx", "js", "jsx"]
+      "assetExts": [
+        "html",
+        "json"
+      ],
+      "sourceExts": [
+        "ts",
+        "tsx",
+        "js",
+        "jsx"
+      ]
     },
     "ios": {
       "splash": {
@@ -52,7 +63,10 @@
       "userInterfaceStyle": "automatic",
       "buildNumber": "1.0.0",
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["faceswiper", "tel"]
+        "LSApplicationQueriesSchemes": [
+          "faceswiper",
+          "tel"
+        ]
       }
     },
     "android": {
