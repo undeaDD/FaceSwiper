@@ -11,6 +11,12 @@
     "backgroundColor": "#000000",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
+    "extra": {
+      "baseURL": "https://undeadd.github.io/FaceSwiper",
+      "homepageURL": "https://www.uni-muenster.de",
+      "imprintURL": "https://undeadd.github.io/FaceSwiper/imprint.html",
+      "licensesURL": "https://undeadd.github.io/FaceSwiper/licenses.html"
+    },
     "developmentClient": {
       "silentLaunch": true
     },
@@ -32,6 +38,15 @@
       "sourceExts": ["ts", "tsx", "js", "jsx"]
     },
     "ios": {
+      "splash": {
+        "backgroundColor": "#ffffff",
+        "dark": {
+          "backgroundColor": "#000000"
+        }
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      },
       "supportsTablet": false,
       "bundleIdentifier": "eu.deltasiege.faceswiper",
       "userInterfaceStyle": "automatic",
@@ -41,6 +56,14 @@
       }
     },
     "android": {
+      "splash": {
+        "backgroundColor": "#ffffff",
+        "dark": {
+          "backgroundColor": "#000000"
+        }
+      },
+      "backgroundColor": "#000000",
+      "allowBackup": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
