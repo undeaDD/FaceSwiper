@@ -58,12 +58,7 @@ export default HomeView = ({ navigation }) => {
         fetch(Constants.manifest.extra.baseURL + "/count.json")
             .then((response) => response.json())
             .then(response => {
-                if (Number(response)) {
-                    let array = [...Array(Number(response)).keys()];
-                    setArray(array);
-                } else {
-                    setArray([]);
-                }
+                setArray(Number(response) ? [...Array(Number(response)).keys()] : []);
             }).catch(_error => {
                 setArray([]);
             });

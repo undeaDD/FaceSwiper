@@ -1,7 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import { FlatList, View,useWindowDimensions, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import ChevronImage from "./../../assets/chevron.png";
-import * as WebBrowser from 'expo-web-browser';
+import { openBrowserAsync, WebBrowserPresentationStyle } from 'expo-web-browser';
 import Constants from 'expo-constants';
 
 export const SettingsViewOptions = {
@@ -12,15 +12,32 @@ export default SettingsView = () => {
     const { width } = useWindowDimensions();
     const { colors } = useTheme();
 
+    const browserOptions = {
+        presentationStyle: "pageSheet",
+        createTask: false,
+        dismissButtonStyle: "close",
+        enableBarCollapsing: true,
+        enableDefaultShareMenuItem: false,
+        readerMode: false,
+        showInRecents: false,
+        showTitle: false
+    };
+
     const items = [
         //{id: "1", cellType: 1, contentType: 0, text: "Bilder URL", placeholder: "https://www.google.de/", keyboard: "url"},
         //{id: "2", cellType: 2, contentType: 0, text: "Anzahl Bilder", placeholder: "3", keyboard: "number-pad"},
     
         //{id: "3", cellType: 0},
     
-        {id: "4", cellType: 1, contentType: 1, text: "Homepage", onPress: () => { WebBrowser.openBrowserAsync(Constants.manifest.extra.homepageURL) }},
-        {id: "5", cellType: 3, contentType: 1, text: "Impressum", onPress: () => { WebBrowser.openBrowserAsync(Constants.manifest.extra.imprintURL) }},
-        {id: "6", cellType: 2, contentType: 1, text: "Lizenzen", onPress: () => { WebBrowser.openBrowserAsync(Constants.manifest.extra.licensesURL) }}
+        {id: "4", cellType: 1, contentType: 1, text: "Homepage", onPress: () => { 
+            openBrowserAsync(Constants.manifest.extra.homepageURL, browserOptions);
+        }},
+        {id: "5", cellType: 3, contentType: 1, text: "Impressum", onPress: () => { 
+            openBrowserAsync(Constants.manifest.extra.imprintURL, browserOptions);
+        }},
+        {id: "6", cellType: 2, contentType: 1, text: "Lizenzen", onPress: () => { 
+            openBrowserAsync(Constants.manifest.extra.licensesURL, browserOptions);
+        }}
     ];
     
     const renderItem = ({item}, width, colors) => {
