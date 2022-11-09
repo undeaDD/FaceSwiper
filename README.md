@@ -1,5 +1,6 @@
 # FaceSwiper
 
+
 ## Inhaltsverzeichnis:
 
 - [Screenshots](#screenshots)
@@ -7,28 +8,20 @@
 - [Projekt Infos](#projekt-informationen)
 - [Aktuelle Features](#aktuellen-features-der-app)
 
-&nbsp;    
 
----
+&nbsp; &nbsp;
 
-&nbsp;
 
 ## Screenshots / Videos:
 
 (comming soon ...)
-
 <img src="" />
-
 <img src="" />
-
 <img src="" />
 
 
-&nbsp;    
+&nbsp; &nbsp;
 
----
-
-&nbsp;
 
 ## Wie kann ich die App Testen?
 
@@ -43,22 +36,18 @@
 
 <strong>Tipp:</strong> Handy Schütteln um das "Expo Go" Debug Menü zu öffnen.
 
-&nbsp;    
 
----
+&nbsp; &nbsp;
 
-&nbsp;
 
 ## Projekt Informationen:
 - <strong>Platform:</strong> Expo / React Native
 - <strong>Sprache:</strong> Javascript
 - <strong>Webhosting:</strong> Github Pages
 
-&nbsp;
 
----
+&nbsp; &nbsp;
 
-&nbsp;
 
 ## Aktuellen Features der App:
 - Tabbar Navigation ( Für weitere Ansichten )
