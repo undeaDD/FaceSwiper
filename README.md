@@ -30,9 +30,14 @@
     - [Android - PlayStore Link](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=de&gl=US&pli=1)
 2. In "Expo Go" anmelden
 3. Die App öffnen:
-    - [Projekt Link](exp://exp.host/@undead_d/faceswiper?release-channel=default)
-    
-        <img src="http://api.qrserver.com/v1/create-qr-code/?color=000000&amp;bgcolor=FFFFFF&amp;data=exp%3A%2F%2Fexp.host%2F%40undead_d%2Ffaceswiper%3Frelease-channel%3Ddefault&amp;qzone=0&amp;margin=0&amp;size=200x400&amp;ecc=L" alt="qr code" />
+    - Link ( im Handy Browser öffnen ): 
+        
+        exp://exp.host/@undead_d/faceswiper?release-channel=default
+    - oder QrCode scannen ( selber Link ):
+        
+        <img src="http://api.qrserver.com/v1/create-qr-code/?color=000000&amp;bgcolor=FFFFFF&amp;data=exp%3A%2F%2Fexp.host%2F%40undead_d%2Ffaceswiper%3Frelease-channel%3Ddefault&amp;qzone=0&amp;margin=0&amp;size=200x400&amp;ecc=L" />
+
+&nbsp;
 
 <strong>Tipp:</strong> Handy Schütteln um das "Expo Go" Debug Menü zu öffnen.
 
