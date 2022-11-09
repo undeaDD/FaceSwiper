@@ -15,10 +15,7 @@
       "baseURL": "https://undeadd.github.io/FaceSwiper",
       "homepageURL": "https://www.uni-muenster.de",
       "imprintURL": "https://undeadd.github.io/FaceSwiper/imprint.html",
-      "licensesURL": "https://undeadd.github.io/FaceSwiper/licenses.html",
-      "eas": {
-        "projectId": "c9a8cf6c-a8e7-4bfa-a0ff-8097756d339b"
-      }
+      "licensesURL": "https://undeadd.github.io/FaceSwiper/licenses.html"
     },
     "developmentClient": {
       "silentLaunch": true
@@ -30,7 +27,6 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "enabled": true,
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
