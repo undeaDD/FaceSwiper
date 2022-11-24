@@ -29,13 +29,13 @@ export default SettingsView = () => {
     
         //{id: "3", cellType: 0},
     
-        {id: "4", cellType: 1, contentType: 1, text: "Homepage", onPress: () => { 
+        {id: "4", cellType: 1, contentType: 1, text: "Homepage öffnen", onPress: () => { 
             openBrowserAsync(Constants.manifest.extra.homepageURL, browserOptions);
         }},
-        {id: "5", cellType: 3, contentType: 1, text: "Impressum", onPress: () => { 
+        {id: "5", cellType: 3, contentType: 1, text: "Impressum anzeigen", onPress: () => { 
             openBrowserAsync(Constants.manifest.extra.imprintURL, browserOptions);
         }},
-        {id: "6", cellType: 2, contentType: 1, text: "Lizenzen", onPress: () => { 
+        {id: "6", cellType: 2, contentType: 1, text: "Lizenzen anzeigen", onPress: () => { 
             openBrowserAsync(Constants.manifest.extra.licensesURL, browserOptions);
         }}
     ];

@@ -1,11 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 import ViewShot from "react-native-view-shot";
-import { FlatList, useWindowDimensions, Image, TouchableOpacity } from 'react-native';
+import { FlatList, useWindowDimensions, TouchableOpacity, Image } from "react-native";
+import { deleteAsync, cacheDirectory, makeDirectoryAsync } from "expo-file-system";
 import ShareScreenshotImage from "./../../assets/share.png";
 import ReloadImage from "./../../assets/reload.png";
-import { useTheme } from '@react-navigation/native';
-import * as Sharing from 'expo-sharing';
-import Constants from 'expo-constants';
+import { useTheme } from "@react-navigation/native";
+import { shareAsync } from "expo-sharing";
+import CachedImage from "./CachedImage";
+import Constants from "expo-constants";
 
 export const HomeViewOptions = {
     title: "FaceSwiper",
@@ -24,8 +26,8 @@ export default HomeView = ({ navigation }) => {
                 keyExtractor={(_item, index) => number.toString() + (index +  1).toString()}
                 horizontal={true}
                 pagingEnabled={true}
-                renderItem={({_item, index}) => renderItem(number.toString() + (index +  1).toString())}
-                style={{flex: 1}}
+                renderItem={({index}) => renderItem(number.toString() + (index +  1).toString())}
+                style={{flex: 1, overflow: "visible", zIndex: 10 - number}}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 alwaysBounceHorizontal={true}
@@ -33,28 +35,32 @@ export default HomeView = ({ navigation }) => {
                 initialNumToRender={1}
                 removeClippedSubviews={true}
                 contentContainerStyle={{flexGrow: 1}}
+                windowSize={3}
             />
         );
     }
 
     const renderItem = (id) => {
         return (
-            <Image 
-                source={{
-                    uri: Constants.manifest.extra.baseURL + "/faces/" + id +  ".jpg?date=" + new Date(),
-                    cache: "reload"
-                }}
+            <CachedImage 
+                id={id}
                 style={{
                     width: width,
-                    height: "100%",
-                    backgroundColor: colors.card,
+                    height: "500%",
+                    backgroundColor: "transparent",
                     resizeMode: "stretch"
                 }} 
             />
         );
     }
 
-    const reloadData = () => {
+    const reloadData = async (removeCache) => {
+        if (removeCache) {
+            await deleteAsync(cacheDirectory + "faces/", {idempotent: true});
+        }
+
+        await makeDirectoryAsync(cacheDirectory + "faces/", {intermediates: true}).catch(() => {console.log("error create folder");});       
+
         fetch(Constants.manifest.extra.baseURL + "/count.json")
             .then((response) => response.json())
             .then(response => {
@@ -65,7 +71,7 @@ export default HomeView = ({ navigation }) => {
     }
 
     useEffect(() => {
-        reloadData();
+        reloadData(false);
     }, []);
 
     useEffect(() => {
@@ -74,7 +80,7 @@ export default HomeView = ({ navigation }) => {
                 <TouchableOpacity
                     style={{height: 26, width: 26}}
                     activeOpacity={0.5}
-                    onPress={reloadData}
+                    onPress={() => reloadData(true)}
                 >
                     <Image
                         source={ReloadImage}
@@ -88,7 +94,7 @@ export default HomeView = ({ navigation }) => {
                     activeOpacity={0.5}
                     onPress={() => {
                         viewShotRef.current.capture().then((uri) => {
-                            Sharing.shareAsync("file://" + uri, {
+                            shareAsync("file://" + uri, {
                                 UTI: "public.jpeg",
                                 dialogTitle: "Screenshot teilen",
                                 mimeType: "image/jpeg"
