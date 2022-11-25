@@ -9,8 +9,8 @@ export default CachedImage = (props) => {
     
     useEffect(() => {
         const cacheImage = async () => {
-            const localFile = cacheDirectory + "faces/" + id + ".jpg";
-            const externalFile = Constants.manifest.extra.baseURL + "/faces/" + id + ".jpg";
+            const localFile = cacheDirectory + "faces/" + id + ".png";
+            const externalFile = Constants.manifest.extra.baseURL + "/faces/" + id + ".png";
             const image = await getInfoAsync(localFile).catch(() => {console.log("error get info");});            
 
             if (image.exists) {

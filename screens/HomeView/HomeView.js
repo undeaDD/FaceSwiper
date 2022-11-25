@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import ViewShot from "react-native-view-shot";
-import { FlatList, useWindowDimensions, TouchableOpacity, Image } from "react-native";
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useHeaderHeight } from '@react-navigation/elements';
+import { FlatList, useWindowDimensions, TouchableOpacity, Image, View } from "react-native";
 import { deleteAsync, cacheDirectory, makeDirectoryAsync } from "expo-file-system";
 import ShareScreenshotImage from "./../../assets/share.png";
 import ReloadImage from "./../../assets/reload.png";
@@ -14,10 +16,28 @@ export const HomeViewOptions = {
 }
 
 export default HomeView = ({ navigation }) => {
-    const { colors } = useTheme();
-    const { width } = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
+    const tabHeight = useBottomTabBarHeight();
+    const headerHeight = useHeaderHeight();
+
+    const cardHeight = height - tabHeight - headerHeight;
+    const fifth = cardHeight / 5.0;
+
     const [ array, setArray ] = useState([]);
     const viewShotRef = useRef();
+    const { colors } = useTheme();
+
+    const Overlay = () => {
+        return (
+            <View pointerEvents="none" style={{height: "100%", width: "100%", position: "absolute"}}>
+                <Image source={require("./../../assets/eyelashes.png")} style={{height: fifth, width: 20, paddingLeft: 5, tintColor: "gray", resizeMode: "contain", borderColor: "gray", borderBottomWidth: 1}} />
+                <Image source={require("./../../assets/eye.png")} style={{height: fifth, width: 20, paddingLeft: 5, tintColor: "gray", resizeMode: "contain", borderColor: "gray", borderBottomWidth: 1}} />
+                <Image source={require("./../../assets/nose.png")} style={{height: fifth, width: 20, paddingLeft: 5, tintColor: "gray", resizeMode: "contain", borderColor: "gray", borderBottomWidth: 1}} />
+                <Image source={require("./../../assets/mouth.png")} style={{height: fifth, width: 20, paddingLeft: 5, tintColor: "gray", resizeMode: "contain", borderColor: "gray", borderBottomWidth: 1}} />
+                <Image source={require("./../../assets/face.png")} style={{height: fifth, width: 20, paddingLeft: 5, tintColor: "gray", resizeMode: "contain"}} />
+            </View>
+        ); 
+    }
 
     const Swiper = ({items, number}) => {
         return (
@@ -26,7 +46,7 @@ export default HomeView = ({ navigation }) => {
                 keyExtractor={(_item, index) => number.toString() + (index +  1).toString()}
                 horizontal={true}
                 pagingEnabled={true}
-                renderItem={({index}) => renderItem(number.toString() + (index +  1).toString())}
+                renderItem={({index}) => renderItem(number.toString() + (index +  1).toString(), number)}
                 style={{flex: 1, overflow: "visible", zIndex: 10 - number}}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
@@ -40,15 +60,16 @@ export default HomeView = ({ navigation }) => {
         );
     }
 
-    const renderItem = (id) => {
+    const renderItem = (id, number) => {
         return (
-            <CachedImage 
+            <CachedImage
                 id={id}
                 style={{
                     width: width,
-                    height: "500%",
-                    backgroundColor: "transparent",
-                    resizeMode: "stretch"
+                    height: cardHeight,
+                    marginTop: -1 * (number - 1) * fifth,
+                    resizeMode: "stretch",
+                    tintColor: colors.text
                 }} 
             />
         );
@@ -112,12 +133,15 @@ export default HomeView = ({ navigation }) => {
     }, [navigation]);
 
     return (
-        <ViewShot style={{flex: 1}} ref={viewShotRef} options={{ fileName: "Face", format: "jpg", quality: 0.9 }} >
-            <Swiper items={array} number={1} />
-            <Swiper items={array} number={2} />
-            <Swiper items={array} number={3} />
-            <Swiper items={array} number={4} />
-            <Swiper items={array} number={5} />
-        </ViewShot>
+        <View style={{flex: 1}}>
+            <ViewShot style={{flex: 1}} ref={viewShotRef} options={{ fileName: "Face", format: "jpeg", quality: 1.0 }} >
+                <Swiper items={array} number={1} />
+                <Swiper items={array} number={2} />
+                <Swiper items={array} number={3} />
+                <Swiper items={array} number={4} />
+                <Swiper items={array} number={5} />
+            </ViewShot>
+            <Overlay />
+        </View>
     );
 }
