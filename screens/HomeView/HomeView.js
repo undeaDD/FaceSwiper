@@ -4,10 +4,12 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { useWindowDimensions, TouchableOpacity, Image, View, Text } from "react-native";
 import { SyncedScrollSection } from "./../SyncedScrollView/SyncedScrollSection";
+import { deleteAsync, cacheDirectory, makeDirectoryAsync } from "expo-file-system";
 import ShareScreenshotImage from "./../../assets/share.png";
 import ReloadImage from "./../../assets/reload.png";
 import { useTheme } from "@react-navigation/native";
 import { shareAsync } from "expo-sharing";
+import Constants from "expo-constants";
 
 export const HomeViewOptions = {
     title: "FaceSwiper",
@@ -22,7 +24,7 @@ export default HomeView = ({ navigation }) => {
     const fifth = cardHeight / 5.0;
 
     const viewShotRef = useRef();
-    const [refresh, setRefreshing] = useState(false);
+    const [ array, setArray ] = useState([]);
     const { colors } = useTheme();
 
     const Overlay = () => {
@@ -38,8 +40,27 @@ export default HomeView = ({ navigation }) => {
     }
 
     const reloadData = async (removeCache) => {
-        setRefreshing(current => !current);
+        if (removeCache) {
+            await deleteAsync(cacheDirectory + "faces/", {idempotent: true});
+        }
+
+        await makeDirectoryAsync(cacheDirectory + "faces/", {intermediates: true}).catch(() => {console.log("error create folder");});       
+
+        fetch(Constants.manifest.extra.baseURL + "/count.json")
+            .then((response) => response.json())
+            .then(response => {
+                setArray(Number(response) ? [...Array(Number(response)).keys()] : []);
+                console.log(array);
+            }).catch(_error => {
+                setArray([]);
+                console.log(array);
+            });
     }
+
+    useEffect(() => {
+        console.log("reload data")
+        reloadData(false);
+    }, []);
 
     useEffect(() => {
         navigation.setOptions({
@@ -81,11 +102,11 @@ export default HomeView = ({ navigation }) => {
     return (
         <View style={{flex: 1}} >
             <ViewShot style={{flex: 1}} ref={viewShotRef} options={{ fileName: "Face", format: "jpeg", quality: 1.0 }} >
-                <SyncedScrollSection id={0} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
+                <SyncedScrollSection id={0} fifth={fifth} width={width} height={cardHeight} data={array} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} data={array} />
+                <SyncedScrollSection id={2} fifth={fifth} width={width} height={cardHeight} data={array} />
+                <SyncedScrollSection id={3} fifth={fifth} width={width} height={cardHeight} data={array} />
+                <SyncedScrollSection id={4} fifth={fifth} width={width} height={cardHeight} data={array} />
             </ViewShot>
             <Overlay />
         </View>

@@ -48,9 +48,15 @@ export const SyncedScrollView = (props) => {
   return (
     <Animated.FlatList
       {...rest}
+      windowSize={3}
       horizontal={true}
       bounces={false}
+      initialNumToRender={1}
+      removeClippedSubviews={true}
       showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      snapToAlignment={"start"}
+      decelerationRate={"fast"}
       ref={scrollViewRef}
       onScroll={handleScroll}
       scrollEventThrottle={16}
