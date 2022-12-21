@@ -1,4 +1,4 @@
-import { useRef, useEffect, } from "react";
+import { useRef, useEffect, useState } from "react";
 import ViewShot from "react-native-view-shot";
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useHeaderHeight } from '@react-navigation/elements';
@@ -22,6 +22,7 @@ export default HomeView = ({ navigation }) => {
     const fifth = cardHeight / 5.0;
 
     const viewShotRef = useRef();
+    const [refresh, setRefreshing] = useState(false);
     const { colors } = useTheme();
 
     const Overlay = () => {
@@ -37,7 +38,7 @@ export default HomeView = ({ navigation }) => {
     }
 
     const reloadData = async (removeCache) => {
-        
+        setRefreshing(current => !current);
     }
 
     useEffect(() => {
@@ -80,11 +81,11 @@ export default HomeView = ({ navigation }) => {
     return (
         <View style={{flex: 1}} >
             <ViewShot style={{flex: 1}} ref={viewShotRef} options={{ fileName: "Face", format: "jpeg", quality: 1.0 }} >
-                <SyncedScrollSection id={0} fifth={fifth} width={width} height={cardHeight} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
-                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
+                <SyncedScrollSection id={0} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} extraData={refresh} />
             </ViewShot>
             <Overlay />
         </View>
