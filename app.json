@@ -78,7 +78,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "useNextNotificationsApi": true,
       "userInterfaceStyle": "automatic",
       "package": "eu.deltasiege.faceswiper"
     },

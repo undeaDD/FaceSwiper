@@ -1,15 +1,13 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, } from "react";
 import ViewShot from "react-native-view-shot";
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { FlatList, useWindowDimensions, TouchableOpacity, Image, View } from "react-native";
-import { deleteAsync, cacheDirectory, makeDirectoryAsync } from "expo-file-system";
+import { useWindowDimensions, TouchableOpacity, Image, View, Text } from "react-native";
+import { SyncedScrollSection } from "./../SyncedScrollView/SyncedScrollSection";
 import ShareScreenshotImage from "./../../assets/share.png";
 import ReloadImage from "./../../assets/reload.png";
 import { useTheme } from "@react-navigation/native";
 import { shareAsync } from "expo-sharing";
-import CachedImage from "./CachedImage";
-import Constants from "expo-constants";
 
 export const HomeViewOptions = {
     title: "FaceSwiper",
@@ -23,7 +21,6 @@ export default HomeView = ({ navigation }) => {
     const cardHeight = height - tabHeight - headerHeight;
     const fifth = cardHeight / 5.0;
 
-    const [ array, setArray ] = useState([]);
     const viewShotRef = useRef();
     const { colors } = useTheme();
 
@@ -39,61 +36,9 @@ export default HomeView = ({ navigation }) => {
         ); 
     }
 
-    const Swiper = ({items, number}) => {
-        return (
-            <FlatList
-                data={items}
-                keyExtractor={(_item, index) => number.toString() + (index +  1).toString()}
-                horizontal={true}
-                pagingEnabled={true}
-                renderItem={({index}) => renderItem(number.toString() + (index +  1).toString(), number)}
-                style={{flex: 1, overflow: "visible", zIndex: 10 - number}}
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                alwaysBounceHorizontal={true}
-                decelerationRate={"fast"}
-                initialNumToRender={1}
-                removeClippedSubviews={true}
-                contentContainerStyle={{flexGrow: 1}}
-                windowSize={3}
-            />
-        );
-    }
-
-    const renderItem = (id, number) => {
-        return (
-            <CachedImage
-                id={id}
-                style={{
-                    width: width,
-                    height: cardHeight,
-                    marginTop: -1 * (number - 1) * fifth,
-                    resizeMode: "stretch",
-                    tintColor: colors.text
-                }} 
-            />
-        );
-    }
-
     const reloadData = async (removeCache) => {
-        if (removeCache) {
-            await deleteAsync(cacheDirectory + "faces/", {idempotent: true});
-        }
-
-        await makeDirectoryAsync(cacheDirectory + "faces/", {intermediates: true}).catch(() => {console.log("error create folder");});       
-
-        fetch(Constants.manifest.extra.baseURL + "/count.json")
-            .then((response) => response.json())
-            .then(response => {
-                setArray(Number(response) ? [...Array(Number(response)).keys()] : []);
-            }).catch(_error => {
-                setArray([]);
-            });
+        
     }
-
-    useEffect(() => {
-        reloadData(false);
-    }, []);
 
     useEffect(() => {
         navigation.setOptions({
@@ -133,13 +78,13 @@ export default HomeView = ({ navigation }) => {
     }, [navigation]);
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1}} >
             <ViewShot style={{flex: 1}} ref={viewShotRef} options={{ fileName: "Face", format: "jpeg", quality: 1.0 }} >
-                <Swiper items={array} number={1} />
-                <Swiper items={array} number={2} />
-                <Swiper items={array} number={3} />
-                <Swiper items={array} number={4} />
-                <Swiper items={array} number={5} />
+                <SyncedScrollSection id={0} fifth={fifth} width={width} height={cardHeight} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
+                <SyncedScrollSection id={1} fifth={fifth} width={width} height={cardHeight} />
             </ViewShot>
             <Overlay />
         </View>

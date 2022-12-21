@@ -15,7 +15,7 @@ export const SettingsStackOptions = {
 
 export default SettingsStack = () => {
     return (
-		<Stack.Navigator>
+		<Stack.Navigator screenOptions={{headerTitleAlign: "center"}}>
             <Stack.Screen name="SettingsView" component={SettingsView} options={SettingsViewOptions}/>
         </Stack.Navigator>
     );

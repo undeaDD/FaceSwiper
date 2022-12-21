@@ -15,7 +15,7 @@ export const HomeStackOptions = {
 
 export default HomeStack = () => {
     return (
-		<Stack.Navigator>
+		<Stack.Navigator screenOptions={{headerTitleAlign: "center"}}>
             <Stack.Screen name="HomeView" component={HomeView} options={HomeViewOptions}/>
         </Stack.Navigator>
     );

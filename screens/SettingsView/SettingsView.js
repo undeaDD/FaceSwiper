@@ -1,7 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import { FlatList, View,useWindowDimensions, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import ChevronImage from "./../../assets/chevron.png";
-import { openBrowserAsync, WebBrowserPresentationStyle } from 'expo-web-browser';
+import { openBrowserAsync } from 'expo-web-browser';
 import Constants from 'expo-constants';
 
 export const SettingsViewOptions = {
